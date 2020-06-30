@@ -10,6 +10,7 @@
 #import "APIManager.h"
 
 @interface TimelineViewController ()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 

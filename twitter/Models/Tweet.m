@@ -47,7 +47,7 @@
     self.favoriteCount = [dictionary[@"favorite_count"] intValue];
     
     self.retweeted = [dictionary[@"retweeted"] boolValue];
-    self.retweetCount = [dictionary[@"retweet_count"] retweetCount];
+    self.retweetCount = [dictionary[@"retweet_count"] intValue];
     
     NSDictionary *user = dictionary[@"user"];
     self.user = [[User alloc] initWithDictionary:user];

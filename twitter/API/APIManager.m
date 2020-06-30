@@ -55,20 +55,22 @@ static NSString * const consumerSecret = @"s5ynGqXzstUZwFPxVyMDkYh197qvHOcVM3kwv
        
         // Manually cache the tweets. If the request fails, restore from cache if possible.
         NSMutableArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:tweetDictionaries];
-        [[NSUserDefaults standardUserDefaults] setValue:data forKey:@"hometimeline_tweets"];
+        
+        /*Putting a hold on caching until I'm sure the tweets model works
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:tweets];
+        [[NSUserDefaults standardUserDefaults] setValue:data forKey:@"hometimeline_tweets"];*/
 
-       completion(tweetDictionaries, nil);
+       completion(tweets, nil);
        
    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
        
        NSArray *tweetDictionaries = nil;
        
        // Fetch tweets from cache if possible
-       NSData *data = [[NSUserDefaults standardUserDefaults] valueForKey:@"hometimeline_tweets"];
+       /*NSData *data = [[NSUserDefaults standardUserDefaults] valueForKey:@"hometimeline_tweets"];
        if (data != nil) {
            tweetDictionaries = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-       }
+       }*/
        
        completion(tweetDictionaries, error);
    }];
