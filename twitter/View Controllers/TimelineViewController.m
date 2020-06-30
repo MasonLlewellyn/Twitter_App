@@ -8,8 +8,10 @@
 
 #import "TimelineViewController.h"
 #import "APIManager.h"
+#import "Tweet.h"
+#import "TweetCell.h"
 
-@interface TimelineViewController ()
+@interface TimelineViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
@@ -18,8 +20,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // Get timeline
+    
+    //Initialize tweet array
+    self.tweets = [[NSMutableArray alloc] init];
+    
+    //TODO: Check if we need to break a retain cycle if so, break  it
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
@@ -27,10 +33,18 @@
                 NSString *text = dictionary[@"text"];
                 NSLog(@"%@", text);
             }*/
+            for (Tweet *t in tweets){
+                NSLog(@"%@", t.text);
+                [self.tweets addObject:t];
+            }
+            
+            NSLog(@"Full arr: %@", self.tweets);
             
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
+        [self.tableView reloadData];
+        
     }];
 }
 
@@ -39,6 +53,21 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - TableView
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    //TODO: return an actual number here
+    return 20;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tweetCell"];
+    Tweet *currTweet = self.tweets[indexPath.row];
+    NSLog(@"Curr Tweet: %@", currTweet);
+    
+    [cell setupCell:currTweet];
+    
+    return cell;
+}
 /*
 #pragma mark - Navigation
 
