@@ -10,6 +10,7 @@
 #import "APIManager.h"
 #import "Tweet.h"
 #import "TweetCell.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface TimelineViewController() <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -21,6 +22,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Get timeline
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
+    self.tableView.rowHeight = 200;
     
     //Initialize tweet array
     self.tweets = [[NSMutableArray alloc] init];
@@ -33,10 +38,7 @@
                 NSString *text = dictionary[@"text"];
                 NSLog(@"%@", text);
             }*/
-            for (Tweet *t in tweets){
-                NSLog(@"%@", t.text);
-                [self.tweets addObject:t];
-            }
+            [self.tweets addObjectsFromArray:tweets];
             
             NSLog(@"Full arr: %@", self.tweets);
             
@@ -56,10 +58,11 @@
 #pragma mark - TableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     //TODO: return an actual number here
-    return 20;
+    return self.tweets.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"--------Cell----Starting");
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tweetCell"];
     Tweet *currTweet = self.tweets[indexPath.row];
     NSLog(@"Curr Tweet: %@", currTweet);
