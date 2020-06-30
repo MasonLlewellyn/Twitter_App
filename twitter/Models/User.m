@@ -16,6 +16,9 @@
     if (self){
         self.name = dictionary[@"name"];
         self.screenName = dictionary[@"screen_name"];
+        self.verified = dictionary[@"verified"]; //This is extra for now, I'll remove it if it causes problems
+        
+        
     }
     return self;
 }
