@@ -17,7 +17,7 @@
     self.tweetLabel.text = self.tweet.text;
     self.nameLabel.text = self.tweet.user.name;
     self.screenNameLabel.text = self.tweet.user.screenName;
-    
+    self.createdAtLabel.text = self.tweet.createdAtString;
     
     NSURL *url = [NSURL URLWithString:self.tweet.user.profileImageURL];
     

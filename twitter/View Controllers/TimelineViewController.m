@@ -69,7 +69,6 @@
 
 #pragma mark - TableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    //TODO: return an actual number here
     return self.tweets.count;
 }
 
