@@ -21,6 +21,22 @@
     
     NSURL *url = [NSURL URLWithString:self.tweet.user.profileImageURL];
     
+    self.retweetLabel.text = @"";
+    self.retweetLabel.text = [@(self.tweet.retweetCount) stringValue];
+    /*if (self.tweet.retweeted){
+        NSLog(@"updating retweet");
+        self.retweetLabel.text = [@(self.tweet.retweetCount) stringValue];
+    }*/
+    
+    self.favoriteLabel.text = @"";
+    self.favoriteLabel.text = [@(self.tweet.favoriteCount) stringValue];
+    
+    /*NSLog(@"FAV-VAL %s", self.tweet.favorited);
+    if (self.tweet.favorited){
+        NSLog(@"updating favorites");
+        self.favoriteLabel.text = [@(self.tweet.retweetCount) stringValue];
+    }*/
+    
     [self.profilePicture setImageWithURL:url];
 }
 
