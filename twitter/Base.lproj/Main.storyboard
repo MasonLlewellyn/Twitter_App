@@ -184,7 +184,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="createdAtLabel" destination="y4Q-TU-s1d" id="bBU-Qb-Qyi"/>
-                                            <outlet property="favoriteButton" destination="gbm-lG-19c" id="v59-Eh-sp1"/>
+                                            <outlet property="favoriteButton" destination="gbm-lG-19c" id="r6O-ZA-d3n"/>
                                             <outlet property="favoriteLabel" destination="cgD-bZ-t6t" id="EiR-l4-RCJ"/>
                                             <outlet property="nameLabel" destination="Sk7-ve-wjh" id="RNd-u6-Fqc"/>
                                             <outlet property="profilePicture" destination="fIV-VL-z85" id="fv3-yG-rcb"/>

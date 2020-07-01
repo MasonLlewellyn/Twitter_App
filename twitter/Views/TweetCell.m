@@ -8,7 +8,7 @@
 
 #import "TweetCell.h"
 #import "UIImageView+AFNetworking.h"
-
+#import "APIManager.h"
 @implementation TweetCell
 
 
@@ -36,19 +36,48 @@
     self.favoriteLabel.text = @"";
     self.favoriteLabel.text = [@(self.tweet.favoriteCount) stringValue];
     
-    /*NSLog(@"FAV-VAL %s", self.tweet.favorited);
+    
     if (self.tweet.favorited){
-        NSLog(@"updating favorites");
-        self.favoriteLabel.text = [@(self.tweet.retweetCount) stringValue];
-    }*/
+        [self.favoriteButton setImage:
+                    [UIImage imageNamed:@"favor-icon-red"]
+                               forState: UIControlStateNormal];
+    }
+    else{
+        [self.favoriteButton setImage:
+                    [UIImage imageNamed:@"favor-icon"]
+                               forState: UIControlStateNormal];
+    }
     
     self.verifiedLogo.hidden = !(self.tweet.user.verified);
     
     [self.profilePicture setImageWithURL:url];
 }
 - (IBAction)favoritePressed:(id)sender {
-    self.tweet.favorited = YES;
-    self.tweet.favoriteCount += 1;
+    if (self.tweet.favorited){
+        //If you already favorited a tweet
+        self.tweet.favorited = NO;
+        self.tweet.favoriteCount -= 1;
+        
+        [[APIManager shared] unFavorite:self.tweet competion:^(Tweet *tweet, NSError *error) {
+            if (error){
+                NSLog(@"Error favoriting tweet");
+            }
+            
+        }];
+        
+    }
+    else{
+        self.tweet.favorited = YES;
+        self.tweet.favoriteCount += 1;
+        
+        [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
+            if (error){
+                NSLog(@"Error favoriting tweet");
+            }
+            
+        }];
+    }
+    
     
     [self refreshCell];
 }
