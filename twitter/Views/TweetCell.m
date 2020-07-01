@@ -9,6 +9,9 @@
 #import "TweetCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "APIManager.h"
+#import "LoginViewController.h"
+#import "AppDelegate.h"
+
 @implementation TweetCell
 
 
@@ -26,14 +29,14 @@
     
     NSURL *url = [NSURL URLWithString:self.tweet.user.profileImageURL];
     
-    self.retweetLabel.text = @"";
     self.retweetLabel.text = [@(self.tweet.retweetCount) stringValue];
-    /*if (self.tweet.retweeted){
-        NSLog(@"updating retweet");
-        self.retweetLabel.text = [@(self.tweet.retweetCount) stringValue];
-    }*/
+    if (self.tweet.retweeted){
+        [self.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green"] forState: UIControlStateNormal];
+    }
+    else{
+        [self.retweetButton setImage:[UIImage imageNamed:@"retweet-icon"] forState: UIControlStateNormal];
+    }
     
-    self.favoriteLabel.text = @"";
     self.favoriteLabel.text = [@(self.tweet.favoriteCount) stringValue];
     
     
@@ -52,6 +55,31 @@
     
     [self.profilePicture setImageWithURL:url];
 }
+- (IBAction)retweetPressed:(id)sender {
+    if (self.tweet.retweeted){
+        //If you already retweeted a tweet
+        self.tweet.retweeted = NO;
+        self.tweet.retweetCount -= 1;
+        
+        [[APIManager shared] unRetweet:self.tweet competion:^(Tweet *tweet, NSError *error) {
+            if (error){
+                NSLog(@"Error un-retweeting tweet");
+            }
+            [self refreshCell];
+        }];
+    }
+    else{
+        self.tweet.retweeted = YES;
+        self.tweet.retweetCount += 1;
+        
+        [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
+            if (error){
+                NSLog(@"Error retweeting tweet");
+            }
+            [self refreshCell];
+        }];
+    }
+}
 - (IBAction)favoritePressed:(id)sender {
     if (self.tweet.favorited){
         //If you already favorited a tweet
@@ -62,6 +90,7 @@
             if (error){
                 NSLog(@"Error favoriting tweet");
             }
+            [self refreshCell];
             
         }];
         
@@ -74,12 +103,16 @@
             if (error){
                 NSLog(@"Error favoriting tweet");
             }
+            [self refreshCell];
             
         }];
     }
     
     
-    [self refreshCell];
+    
+}
+- (IBAction)logoutPressed:(id)sender {
+
 }
 
 - (void)awakeFromNib {

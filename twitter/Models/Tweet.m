@@ -38,7 +38,7 @@
     }
     
     self.idStr = dictionary[@"id_str"];
-    self.text = dictionary[@"text"];
+    self.text = dictionary[@"full_text"];
     
     self.createdAtString = dictionary[@"created_at"];
     self.createdAtString = [self FormattedDate: self.createdAtString];
