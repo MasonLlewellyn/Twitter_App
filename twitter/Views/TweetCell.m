@@ -11,6 +11,11 @@
 
 @implementation TweetCell
 
+
+//Refreshes the cell UI
+- (void) refreshCell{
+    [self setupCell:self.tweet];
+}
 //Given a tweet, this method sets up the tableViewCell to display that tweet
 - (void) setupCell:(Tweet*)givenTweet{
     self.tweet = givenTweet;
@@ -37,7 +42,15 @@
         self.favoriteLabel.text = [@(self.tweet.retweetCount) stringValue];
     }*/
     
+    self.verifiedLogo.hidden = !(self.tweet.user.verified);
+    
     [self.profilePicture setImageWithURL:url];
+}
+- (IBAction)favoritePressed:(id)sender {
+    self.tweet.favorited = YES;
+    self.tweet.favoriteCount += 1;
+    
+    [self refreshCell];
 }
 
 - (void)awakeFromNib {

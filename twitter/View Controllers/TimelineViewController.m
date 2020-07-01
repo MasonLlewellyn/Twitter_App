@@ -21,13 +21,12 @@
 
 //Method to fetch timeline from Twitter API
 - (void)fetchTimeline{
+    NSLog(@"---------------------------Fetching your precious data");
     __weak typeof(self) weakSelf = self;
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
             [weakSelf.tweets addObjectsFromArray:tweets];
-            
-            NSLog(@"Full arr: %@", self.tweets);
             
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
@@ -38,7 +37,9 @@
 }
 //Refreshing Function
 - (void)beginRefresh:(UIRefreshControl*)refreshControl{
+    NSLog(@"Refreshing something");
     [self fetchTimeline];
+    
     [refreshControl endRefreshing];
 }
 
@@ -48,7 +49,7 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    self.tableView.rowHeight = 200;
+    //self.tableView.rowHeight = 200;
     
     //Initialize tweet array
     self.tweets = [[NSMutableArray alloc] init];
@@ -73,10 +74,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"--------Cell----Starting");
+    //NSLog(@"--------Cell----Starting");
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tweetCell"];
     Tweet *currTweet = self.tweets[indexPath.row];
-    NSLog(@"Curr Tweet: %@", currTweet);
+    //NSLog(@"Curr Tweet: %@", currTweet);
     
     [cell setupCell:currTweet];
     
