@@ -19,17 +19,7 @@
 
 @implementation TimelineViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Get timeline
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    
-    self.tableView.rowHeight = 200;
-    
-    //Initialize tweet array
-    self.tweets = [[NSMutableArray alloc] init];
-    
+- (void)fetchTimeline{
     //TODO: Check if we need to break a retain cycle if so, break  it
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
@@ -48,6 +38,31 @@
         [self.tableView reloadData];
         
     }];
+}
+//Refreshing Function
+- (void)beginRefresh:(UIRefreshControl*)refreshControl{
+    [self fetchTimeline];
+    [refreshControl endRefreshing];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Get timeline
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
+    self.tableView.rowHeight = 200;
+    
+    //Initialize tweet array
+    self.tweets = [[NSMutableArray alloc] init];
+    
+    //RefreshControl
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:refreshControl atIndex:0];
+    
+    [self fetchTimeline];
+    
 }
 
 - (void)didReceiveMemoryWarning {
