@@ -19,23 +19,20 @@
 
 @implementation TimelineViewController
 
+//Method to fetch timeline from Twitter API
 - (void)fetchTimeline{
-    //TODO: Check if we need to break a retain cycle if so, break  it
+    __weak typeof(self) weakSelf = self;
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
-            /*for (NSDictionary *dictionary in tweets) {
-                NSString *text = dictionary[@"text"];
-                NSLog(@"%@", text);
-            }*/
-            [self.tweets addObjectsFromArray:tweets];
+            [weakSelf.tweets addObjectsFromArray:tweets];
             
             NSLog(@"Full arr: %@", self.tweets);
             
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
-        [self.tableView reloadData];
+        [weakSelf.tableView reloadData];
         
     }];
 }
