@@ -11,6 +11,7 @@
 #import "APIManager.h"
 #import "LoginViewController.h"
 #import "AppDelegate.h"
+#import "DateTools.h"
 
 @implementation TweetCell
 
@@ -25,7 +26,16 @@
     self.tweetLabel.text = self.tweet.text;
     self.nameLabel.text = self.tweet.user.name;
     self.screenNameLabel.text = self.tweet.user.screenName;
-    self.createdAtLabel.text = self.tweet.createdAtString;
+    
+    //Setting the CreatedAt Label to show either relative or absolute date
+    NSDate *dt = [NSDate date];
+    NSTimeInterval refTime = -86400;
+    NSTimeInterval sinceCreated = [self.tweet.createdDate timeIntervalSinceDate:dt];
+    
+    if (sinceCreated >= refTime)
+        self.createdAtLabel.text = self.tweet.createdDate.shortTimeAgoSinceNow;
+    else
+        self.createdAtLabel.text = self.tweet.createdAtString;
     
     NSURL *url = [NSURL URLWithString:self.tweet.user.profileImageURL];
     
@@ -39,7 +49,6 @@
     
     self.favoriteLabel.text = [@(self.tweet.favoriteCount) stringValue];
     
-    
     if (self.tweet.favorited){
         [self.favoriteButton setImage:
                     [UIImage imageNamed:@"favor-icon-red"]
@@ -50,7 +59,9 @@
                     [UIImage imageNamed:@"favor-icon"]
                                forState: UIControlStateNormal];
     }
+ 
     
+    self.replyLabel.text = [@(self.tweet.replyCount) stringValue];
     self.verifiedLogo.hidden = !(self.tweet.user.verified);
     
     [self.profilePicture setImageWithURL:url];

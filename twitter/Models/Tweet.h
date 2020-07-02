@@ -24,6 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL favorited;
 @property (nonatomic) int favoriteCount;
 
+@property (nonatomic) int replyCount;
+@property (nonatomic, strong) NSDate *createdDate;
+
+
 - (instancetype)initWithDictionary:(NSDictionary*) dictionary;
 + (NSMutableArray*)tweetsWithArray:(NSArray*)dictionaries;//Spawn an array of tweet objects given their dictionaries
 

@@ -22,6 +22,9 @@
     formatter.dateStyle = NSDateFormatterShortStyle;
     formatter.timeStyle = NSDateFormatterNoStyle;
     
+    //Set the created date for self
+    self.createdDate = date;
+    
     return self.createdAtString = [formatter stringFromDate:date];
 }
 
@@ -43,12 +46,13 @@
     self.createdAtString = dictionary[@"created_at"];
     self.createdAtString = [self FormattedDate: self.createdAtString];
     
-    self.favorited = [dictionary[@"favorited"] boolValue];
+     self.favorited = [dictionary[@"favorited"] boolValue];
     self.favoriteCount = [dictionary[@"favorite_count"] intValue];
     
     self.retweeted = [dictionary[@"retweeted"] boolValue];
     self.retweetCount = [dictionary[@"retweet_count"] intValue];
     
+    self.replyCount = [dictionary[@"reply_count"] intValue];
     NSDictionary *user = dictionary[@"user"];
     self.user = [[User alloc] initWithDictionary:user];
     

@@ -122,8 +122,6 @@ static NSString * const consumerSecret = @"rQzBkGpzYlxd2qL4TglXQ4tTZbe88rCOhNN4T
     NSString *urlString = @"1.1/statuses/retweet/";
     NSString *fullURL = [NSString stringWithFormat:@"%@%@.json?tweet_mode=extended", urlString, tweet.idStr];
     
-    NSDictionary *parameters = @{@"id": tweet.idStr};
-    NSLog(fullURL);
     [self POST:fullURL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
         Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
         completion(tweet, nil);
@@ -136,8 +134,6 @@ static NSString * const consumerSecret = @"rQzBkGpzYlxd2qL4TglXQ4tTZbe88rCOhNN4T
     NSString *urlString = @"1.1/statuses/unretweet/";
     NSString *fullURL = [NSString stringWithFormat:@"%@%@.json?tweet_mode=extended", urlString, tweet.idStr];
     
-    NSDictionary *parameters = @{@"id": tweet.idStr};
-    NSLog(fullURL);
     [self POST:fullURL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
         Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
         completion(tweet, nil);
