@@ -109,12 +109,14 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([sender isKindOfClass:[TweetCell class]]){
+        TweetCell *cell = sender;
+        tweetDetailsViewController *control = [segue destinationViewController];
+          
+        //[control setupView:cell.tweet];
+        control.tweet = cell.tweet;
+    }
     
-    TweetCell *cell = sender;
-    tweetDetailsViewController *control = [segue destinationViewController];
-      
-    //[control setupView:cell.tweet];
-    control.tweet = cell.tweet;
     
 }
 

@@ -25,7 +25,7 @@
     self.tweet = givenTweet;
     self.tweetLabel.text = self.tweet.text;
     self.nameLabel.text = self.tweet.user.name;
-    self.screenNameLabel.text = self.tweet.user.screenName;
+    self.screenNameLabel.text = [NSString stringWithFormat:@"@%@", self.tweet.user.screenName];
     
     //Setting the CreatedAt Label to show either relative or absolute date
     NSDate *dt = [NSDate date];
