@@ -13,6 +13,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "tweetDetailsViewController.h"
+#import "ComposeViewController.h"
 
 
 @interface TimelineViewController() <UITableViewDataSource, UITableViewDelegate>
@@ -44,6 +46,11 @@
     [self fetchTimeline];
     
     [refreshControl endRefreshing];
+}
+
+//Re-Fetch the timeline when it reappears
+- (void)viewWillAppear:(BOOL)animated{
+    [self fetchTimeline];
 }
 
 - (void)viewDidLoad {
@@ -95,15 +102,22 @@
     return cell;
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    TweetCell *cell = sender;
+    tweetDetailsViewController *control = [segue destinationViewController];
+      
+    //[control setupView:cell.tweet];
+    control.tweet = cell.tweet;
+    
 }
-*/
+
 
 
 @end

@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Tweet.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ComposeViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextView *tweetTextView;
-
+@property (nonatomic, strong) Tweet* replyTweet;
 @end
 
 NS_ASSUME_NONNULL_END

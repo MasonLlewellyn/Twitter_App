@@ -28,17 +28,27 @@
 }
 - (IBAction)postTweetAction:(id)sender {
      __weak typeof(self) weakSelf = self;
-    [[APIManager shared] postStatusWithText:self.tweetTextView.text completion:^(Tweet *tweet, NSError *error) {
-        /*if (tweet){
+    if (self.replyTweet){
+        //If there is a tweet to reply to, reply to that
+        [[APIManager shared] postReplyWithText:self.tweetTextView.text givenTweet:self.replyTweet completion:^(Tweet *tweet, NSError *error) {
+            [weakSelf dismissViewControllerAnimated:true
+            completion:nil];
+        }];
+    }
+    else{
+        //If there is no tweet to reply to
+        [[APIManager shared] postStatusWithText:self.tweetTextView.text completion:^(Tweet *tweet, NSError *error) {
+            /*if (tweet){
             
-        }
-        else{
-            NSLog(@"😫😫😫 Error posting tweet: %@", error.localizedDescription);
-        }*/
-        [weakSelf dismissViewControllerAnimated:true
-                                     completion:nil];
+             }
+             else{
+                NSLog(@"😫😫😫 Error posting tweet: %@", error.localizedDescription);
+             }*/
+            [weakSelf dismissViewControllerAnimated:true
+                                         completion:nil];
         
-    }];
+        }];
+    }
 }
 
 /*

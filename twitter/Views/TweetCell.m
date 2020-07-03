@@ -122,9 +122,6 @@
     
     
 }
-- (IBAction)logoutPressed:(id)sender {
-
-}
 
 - (void)awakeFromNib {
     [super awakeFromNib];
