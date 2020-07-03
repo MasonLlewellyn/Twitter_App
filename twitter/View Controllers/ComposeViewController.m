@@ -38,12 +38,9 @@
     else{
         //If there is no tweet to reply to
         [[APIManager shared] postStatusWithText:self.tweetTextView.text completion:^(Tweet *tweet, NSError *error) {
-            /*if (tweet){
-            
-             }
-             else{
+             if (error){
                 NSLog(@"😫😫😫 Error posting tweet: %@", error.localizedDescription);
-             }*/
+             }
             [weakSelf dismissViewControllerAnimated:true
                                          completion:nil];
         

@@ -54,7 +54,7 @@
     else
         self.createdAtLabel.text = self.tweet.createdAtString;
     
-    //NSLog(@"%@", self.tweet.user.profileImageURL);
+    
     NSURL *url = [NSURL URLWithString:self.tweet.user.profileImageURL];
        
     self.retweetCountLabel.text = [@(self.tweet.retweetCount) stringValue];
@@ -147,9 +147,6 @@
     // Pass the selected object to the new view controller.
     UINavigationController *control = [segue destinationViewController];
     ((ComposeViewController*)(control.viewControllers[0])).replyTweet = self.tweet;
-    
-    
-    ((ComposeViewController*)(control.viewControllers[0])).tweetTextView.text;
 }
 
 

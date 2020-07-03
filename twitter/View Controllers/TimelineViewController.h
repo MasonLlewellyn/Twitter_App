@@ -10,4 +10,5 @@
 
 @interface TimelineViewController : UIViewController
 @property (strong, nonatomic) NSMutableArray *tweets;
+- (NSString*) getMaxTweetID;
 @end

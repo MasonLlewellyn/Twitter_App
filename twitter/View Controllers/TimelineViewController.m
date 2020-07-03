@@ -28,7 +28,7 @@
 - (void)fetchTimeline{
     NSLog(@"---------------------------Fetching your precious data");
     __weak typeof(self) weakSelf = self;
-    [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
+    [[APIManager shared] getHomeTimelineWithCompletion: ^(NSArray *tweets, NSError *error) {
         if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
             [weakSelf.tweets addObjectsFromArray:tweets];
@@ -37,7 +37,6 @@
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
         [weakSelf.tableView reloadData];
-        
     }];
 }
 //Refreshing Function
@@ -53,6 +52,19 @@
     [self fetchTimeline];
 }
 
+//Get the maximum id number out of the present array of tweets
+- (NSString*)getMaxTweetID{
+    NSInteger max_id = 0;
+    NSString *max_id_str = @"0";
+    for (Tweet *i in self.tweets){
+        NSInteger id_val = [i.idStr intValue];
+        if (id_val > max_id){
+            max_id = id_val;
+            max_id_str = i.idStr;
+        }
+    }
+    return max_id_str;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Get timeline
@@ -92,10 +104,8 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    //NSLog(@"--------Cell----Starting");
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tweetCell"];
     Tweet *currTweet = self.tweets[indexPath.row];
-    //NSLog(@"Curr Tweet: %@", currTweet);
     
     [cell setupCell:currTweet];
     
